@@ -1,0 +1,23 @@
+{% extends 'blog_app/base.html' %}
+
+{% block content %}
+
+    <h2 id="srodek">Wprowadź poniższe dane, aby się zalogować</h2>
+    <div class="form">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block right %}
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'homePage' %}">Przerwij logowanie</a></li>
+        </ul>
+    </nav>
+
+{% endblock %}

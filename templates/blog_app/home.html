@@ -1,0 +1,42 @@
+{% extends 'blog_app/base.html' %}
+
+{% block content %}
+
+    <head>
+
+        <div>
+            <title>Blogonatron</title>
+            <h3>Strona główna</h3>
+        </div>
+
+    </head>
+
+    <script>
+
+        {% if message %}
+
+            alert('{{ message }}');
+
+        {% endif %}
+
+    </script>
+
+{% endblock %}
+
+{% block left %}
+{% endblock %}
+
+{% block right %}
+
+    <nav>
+
+        <ul>
+
+            <li><a href="{% url 'registerForm' %}">Zajejestruj sie</a></li>
+            <li><a href="/accounts/login">Zaloguj sie</a></li>
+
+        </ul>
+
+    </nav>
+
+{% endblock %}

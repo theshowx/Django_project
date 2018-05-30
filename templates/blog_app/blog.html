@@ -1,0 +1,37 @@
+{% extends 'blog_app/base.html' %}
+
+{% block content %}
+
+    <head>
+
+        <div>
+            <title>{{ user.username }} blog</title>
+            <h3>Blog użytkownika {{ user.username }}</h3>
+        </div>
+
+    </head>
+
+    {% if posts %}
+        {% for post in posts %}
+            <h3><a href="{% url 'articlePage' post.id %}">{{ post.nazwa }}</a></h3>
+            <p>{{ post.dataUtworzenia }}</p>
+        {% endfor %}
+    {% else %}
+        <p>Brak postów do wyświetlenia</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block left %}
+
+     <nav>
+
+         <ul>
+
+             <li><a href="{% url 'homePage' %}">Strona główna</a></li>
+             <li><a href="{% url 'userProfile' user.username %}">Przejdz do profilu autora</a></li>
+         </ul>
+
+     </nav>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    <link rel="stylesheet" type = "text/css" href="{% static 'blog_app/style.css' %}"/>
+
+    </head>
+
+
+    <body>
+        <header id="header"><p>Blogonatron</p></header>
+
+        <nav id="container">
+
+		<main id="center" class="column">
+
+				{% block content %}
+                {% endblock %}
+
+		</main>
+
+        <nav id="left" class="column">
+
+            {% block left %}
+            {% endblock %}
+
+        </nav>
+
+        <nav id="right" class="column">
+
+            {% block right %}
+            {% endblock %}
+
+        </nav>
+
+
+        </nav>
+
+        <div id="footer-wrapper">
+
+		    <footer id="footer"><p>Show™ 2018</p></footer>
+
+        </div>
+    </body>
+
+</html>

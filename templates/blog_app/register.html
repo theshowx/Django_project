@@ -1,0 +1,39 @@
+{% extends 'blog_app/base.html' %}
+
+{% block content %}
+
+    <script>
+        {% if message %}
+            alert('{{ message }}');
+        {% endif %}
+    </script>
+
+    <h3 id="srodek">Uzupełnij poniższe dane, aby się zarejestrować</h3>
+
+    <div class="form">
+        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+
+            <span class="text-danger small">{{ field.errors }}</span>
+            <label>{{ field.label_tag }}</label>
+            <div>{{ field }}</div>
+
+        {% endfor %}
+        <button type="submit">Submit</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block left %}
+{% endblock %}
+
+{% block right %}
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'homePage' %}">Przerwij rejestracje</a></li>
+        </ul>
+    </nav>
+
+{% endblock %}
