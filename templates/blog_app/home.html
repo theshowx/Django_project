@@ -4,26 +4,64 @@
 
     <head>
 
-        <div>
-            <title>Blogonatron</title>
-            <h3>Strona główna</h3>
-        </div>
+        <title>Blogonatron</title>
 
     </head>
 
-    <script>
+    <body>
 
-        {% if message %}
+        <h2>Strona główna</h2>
 
-            alert('{{ message }}');
+        <div>
 
-        {% endif %}
+            {% if posts %}
 
-    </script>
+                <h3>Ostatnio dodane artykuły:</h3>
+
+                {% for post in posts %}
+                    <h3><a href="{% url 'articlePage' post.id %}">{{ post.nazwa }}</a></h3>
+                    <p>Autor:<a href="{% url 'userProfile' post.autor.username %}"> {{ post.autor.username }}</a> {{ post.dataUtworzenia }}</p>
+                {% endfor %}
+
+            {% endif %}
+
+        </div>
+
+        <script>
+
+            {% if message %}
+
+                alert('{{ message }}');
+
+            {% endif %}
+
+        </script>
+
+    </body>
+
+
+
 
 {% endblock %}
 
 {% block left %}
+
+    <nav>
+
+        <ul>
+
+            {% if user.is_authenticated %}
+
+                <li><a href="{% url 'userProfile' user.username %}">Wyświetl swój profil</a></li>
+
+            {% endif %}
+
+        </ul>
+
+    </nav>
+
+
+
 {% endblock %}
 
 {% block right %}
@@ -32,8 +70,12 @@
 
         <ul>
 
-            <li><a href="{% url 'registerForm' %}">Zajejestruj sie</a></li>
-            <li><a href="/accounts/login">Zaloguj sie</a></li>
+            {% if not user.is_authenticated %}
+                <li><a href="{% url 'registerForm' %}">Zajejestruj sie</a></li>
+                <li><a href="/accounts/login">Zaloguj sie</a></li>
+            {% else %}
+                <li><a href="/accounts/logout">Wyloguj sie</a></li>
+            {% endif %}
 
         </ul>
 

@@ -128,3 +128,11 @@
             text-align: center;
         }
 
+        #logged {
+            color: yellow;
+        }
+
+        #line {
+            display: inline-block;
+        }
+
