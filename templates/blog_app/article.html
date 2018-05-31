@@ -4,19 +4,38 @@
 
     <head>
 
-        <div>
-
-            <title>{{ post.autor.username }} blog</title>
-            <h2>{{ post.nazwa }}</h2>
-            <h4>{{ post.dataUtworzenia }}</h4>
-
-        </div>
+        <title>{{ post.autor.username }} blog</title>
 
     </head>
 
     <body>
 
+        <h2>{{ post.nazwa }}</h2>
+        <h4>{{ post.dataUtworzenia }}</h4>
         <p>{{ post.tresc|linebreaksbr }}</p>
+
+
+
+        <h3>Komentarze:</h3>
+        {% if comments %}
+            {% for comment in comments %}
+
+                <p class="comment">{{ comment.tresc|linebreaksbr }}</p>
+                <p style="font-size: 0.75em">
+                    Zamieszczony przez:
+                    <a href="{% url 'userProfile' comment.autor.username %}">{{ comment.autor.username }}</a>
+                    {{ comment.dataZamieszczenia }}
+                    {% if user.is_authenticated %}
+                        {% if user == comment.autor %}
+                            <a href="{% url 'editComment' post.id comment.id %}">Edytuj</a>
+                        {% endif %}
+                    {% endif %}
+
+                </p>
+            {% endfor %}
+        {% else %}
+            <p class="comment">Brak komentarzy do wyświetlenia.</p>
+        {% endif %}
 
     </body>
 
@@ -39,15 +58,18 @@
 {% endblock %}
 
 {% block right %}
+    <ul>
+        {% if user.is_authenticated %}
+            {% if user == post.autor %}
 
-    {% if user.is_authenticated %}
-        {% if user == post.autor %}
-        <ul>
 
-            <li><a href="{% url 'editArticle' post.id %}">Edytuj artykuł</a></li>
-            <li>Usuń artykuł</li>
-        </ul>
+                <li><a href="{% url 'editArticle' post.id %}">Edytuj artykuł</a></li>
+                <li>Usuń artykuł</li>
+
+            {% endif %}
+
+            <li><a href="{% url 'newComment' post.id %}">Skomentuj artykuł</a></li>
+
         {% endif %}
-    {% endif %}
-
+    </ul>
 {% endblock %}

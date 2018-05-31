@@ -9,9 +9,14 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password']
 
-
 class ArticleForm(forms.ModelForm):
 
     class Meta:
         model = Artykul
         fields = ['nazwa', 'tresc']
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Komentarz
+        fields = ['tresc']

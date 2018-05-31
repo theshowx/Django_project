@@ -128,11 +128,8 @@
             text-align: center;
         }
 
-        #logged {
-            color: yellow;
-        }
-
-        #line {
-            display: inline-block;
+        .comment {
+            font-size: 0.85em;
+            font-style: italic;
         }
 

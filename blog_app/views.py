@@ -40,7 +40,10 @@ def articlePage(request, id):
         post = Artykul.objects.get(pk = id)
     except Artykul.DoesNotExist:
         raise Http404
-    return render(request, 'blog_app/article.html', {'post': post}) #, 'user': post.user
+
+    comments = Komentarz.objects.filter(artykul = post).order_by('dataZamieszczenia')
+
+    return render(request, 'blog_app/article.html', {'post': post, 'comments': comments}) #, 'user': post.user
 
 def userProfile(request, username):
     try:
@@ -98,7 +101,7 @@ def newArticle(request):
             return redirect('articlePage' , id = post.id)
     else:
         form = ArticleForm
-    return render(request, 'blog_app/editArticle.html', {'form': form})
+    return render(request, 'blog_app/editArtCom.html', {'form': form, 'header': "Dodaj nowy artykuł."})
 
 def editArticle(request, id):
     post = get_object_or_404(Artykul, pk = id)
@@ -110,10 +113,46 @@ def editArticle(request, id):
         if form.is_valid():
             post = form.save(commit = False)
             post.autor = request.user
-            post.dataUtworzenia = timezone.now()
+            #post.dataUtworzenia = timezone.now()
             post.save()
             return redirect('articlePage' , id = post.id)
     else:
         form = ArticleForm(instance = post)
-    return render(request, 'blog_app/editArticle.html', {'form': form})
+    return render(request, 'blog_app/editArtCom.html', {'form': form, 'header': "Zedytuj swój artykuł."})
+
+def newComment(request, id):
+    post = get_object_or_404(Artykul, pk = id)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit = False)
+            comment.autor = request.user
+            comment.dataZamieszczenia = timezone.now()
+            comment.artykul = post
+            comment.save()
+            return redirect('articlePage' , id = post.id)
+    else:
+        form = CommentForm
+    return render(request, 'blog_app/editArtCom.html', {'form': form, 'header': "Dodaj nowy komentarz."})
+
+def editComment(request, idArt, idKom):
+    comment = get_object_or_404(Komentarz, pk = idKom)
+    if comment.autor != request.user:
+        return HttpResponse("Błąd! Nie możesz edytować komentarzy innych użytkowników.")
+
+    post = get_object_or_404(Artykul, pk = idArt)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance = comment)
+        if form.is_valid():
+            comment = form.save(commit = False)
+            comment.autor = request.user
+            #comment.dataZamieszczenia = timezone.now()
+            comment.artykul = post
+            comment.save()
+            return redirect('articlePage' , id = post.id)
+    else:
+        form = CommentForm(instance = comment)
+    return render(request, 'blog_app/editArtCom.html', {'form': form, 'header': "Zedytuj swój komentarz."})
 
