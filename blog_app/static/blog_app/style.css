@@ -128,3 +128,9 @@
             text-align: center;
         }
 
+        .comment {
+            border-radius: 5px;
+            border: 1px solid black;
+            background-color: #12db75;
+        }
+

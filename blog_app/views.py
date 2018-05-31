@@ -120,6 +120,14 @@ def editArticle(request, id):
         form = ArticleForm(instance = post)
     return render(request, 'blog_app/editArtCom.html', {'form': form, 'header': "Zedytuj swój artykuł."})
 
+def deleteArticle(request, id):
+    post = get_object_or_404(Artykul, pk = id)
+    if post.autor != request.user:
+        return HttpResponse("Błąd! Nie możesz usuwać artykułów innych użytkowników.")
+
+    post.delete()
+    return redirect('blogPage' , username = request.user.username)
+
 def newComment(request, id):
     post = get_object_or_404(Artykul, pk = id)
 
@@ -155,4 +163,12 @@ def editComment(request, idArt, idKom):
     else:
         form = CommentForm(instance = comment)
     return render(request, 'blog_app/editArtCom.html', {'form': form, 'header': "Zedytuj swój komentarz."})
+
+def deleteComment(request, idArt, idKom):
+    comment = get_object_or_404(Komentarz, pk = idKom)
+    if comment.autor != request.user:
+        return HttpResponse("Błąd! Nie możesz usuwać komentarzy innych użytkowników.")
+
+    comment.delete()
+    return redirect('articlePage' , id = idArt)
 

@@ -19,19 +19,22 @@
         <h3>Komentarze:</h3>
         {% if comments %}
             {% for comment in comments %}
+                <div class="comment">
+                    <p style="font-size: 0.85em; font-style: italic;">{{ comment.tresc|linebreaksbr }}</p>
 
-                <p style="font-size: 0.85em; font-style: italic;">{{ comment.tresc|linebreaksbr }}</p>
-                <p style="font-size: 0.75em">
-                    Zamieszczony przez:
-                    <a href="{% url 'userProfile' comment.autor.username %}">{{ comment.autor.username }}</a>
-                    {{ comment.dataZamieszczenia }}
-                    {% if user.is_authenticated %}
-                        {% if user == comment.autor %}
-                            <a href="{% url 'editComment' post.id comment.id %}">Edytuj</a>
+                    <p style="font-size: 0.75em">
+                        Zamieszczony przez:
+                        <a href="{% url 'userProfile' comment.autor.username %}">{{ comment.autor.username }}</a>
+                        {{ comment.dataZamieszczenia }}
+                        {% if user.is_authenticated %}
+                            {% if user == comment.autor %}
+                                <a href="{% url 'editComment' post.id comment.id %}">Edytuj</a>
+                                <a href="{% url 'deleteComment' post.id comment.id %}">Usuń</a>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
 
-                </p>
+                    </p>
+                </div>
             {% endfor %}
         {% else %}
             <p class="comment">Brak komentarzy do wyświetlenia.</p>
@@ -64,7 +67,7 @@
 
 
                 <li><a href="{% url 'editArticle' post.id %}">Edytuj artykuł</a></li>
-                <li>Usuń artykuł</li>
+                <li><a href="{% url 'deleteArticle' post.id %}">Usuń artykuł</a></li>
 
             {% endif %}
 

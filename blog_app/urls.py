@@ -9,6 +9,8 @@ urlpatterns = [
     url(r'^article/(?P<id>\d+)/$', articlePage, name = 'articlePage'),
     url(r'^article/new/$', newArticle, name = 'newArticle'),
     url(r'^article/(?P<id>\d+)/edit/$', editArticle, name = 'editArticle'),
+    url(r'^article/(?P<id>\d+)/delete/$', deleteArticle, name = 'deleteArticle'),
     url(r'^article/(?P<id>\d+)/comment/new/$', newComment, name = 'newComment'),
     url(r'^article/(?P<idArt>\d+)/comment/(?P<idKom>\d+)/edit/$', editComment, name = 'editComment'),
+    url(r'^article/(?P<idArt>\d+)/comment/(?P<idKom>\d+)/delete/$', deleteComment, name ='deleteComment'),
 ]
