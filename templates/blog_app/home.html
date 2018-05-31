@@ -71,10 +71,10 @@
         <ul>
 
             {% if not user.is_authenticated %}
-                <li><a href="{% url 'registerForm' %}">Zajejestruj sie</a></li>
-                <li><a href="/accounts/login">Zaloguj sie</a></li>
+                <li><a href="{% url 'registerForm' %}">Zajejestruj się</a></li>
+                <li><a href="/accounts/login">Zaloguj się</a></li>
             {% else %}
-                <li><a href="/accounts/logout">Wyloguj sie</a></li>
+                <li><a href="/accounts/logout">Wyloguj się</a></li>
             {% endif %}
 
         </ul>
