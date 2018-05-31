@@ -9,7 +9,7 @@ from django.views.generic import View
 
 def homePage(request):
     try:
-        posts = Artykul.objects.filter().order_by('dataUtworzenia')[:10]
+        posts = Artykul.objects.filter().order_by('-dataUtworzenia')[:10]
     except Artykul.DoesNotExist:
         return render(request, 'blog_app/home.html', {})
     else:
