@@ -37,3 +37,17 @@
     </nav>
 
 {% endblock %}
+
+{% block right %}
+
+    {% if user.is_authenticated %}
+        {% if user == post.autor %}
+        <ul>
+
+            <li><a href="{% url 'editArticle' post.id %}">Edytuj artykuł</a></li>
+            <li>Usuń artykuł</li>
+        </ul>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

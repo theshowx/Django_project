@@ -5,8 +5,8 @@
     <head>
 
         <div>
-            <title>{{ user.username }}</title>
-            <h3>Profil użytkownika {{ user.username }}</h3>
+            <title>{{ userr.username }}</title>
+            <h3>Profil użytkownika {{ userr.username }}</h3>
         </div>
 
 
@@ -16,9 +16,9 @@
     <body>
 
         <section>
-            <p>Imię: {{ user.first_name }}</p>
-            <p>Nazwisko: {{ user.last_name }}</p>
-            <p>E-mail: {{ user.email }}</p>
+            <p>Imię: {{ userr.first_name }}</p>
+            <p>Nazwisko: {{ userr.last_name }}</p>
+            <p>E-mail: {{ userr.email }}</p>
         </section>
 
     </body>
@@ -37,7 +37,7 @@
 
         <ul>
             <li><a href="{% url 'homePage' %}">Strona główna</a></li>
-            <li><a href="{% url 'blogPage' user.username %}">Przejdz do bloga</a></li>
+            <li><a href="{% url 'blogPage' userr.username %}">Przejdz do bloga</a></li>
         </ul>
 
     </nav>

@@ -12,7 +12,15 @@
 
 
     <body>
-        <header id="header"><p>Blogonatron</p></header>
+        <header id="header">
+
+
+                <p>Blogonatron</p>
+                {% if user.is_authenticated %}
+                    <p id="logged">Witaj, {{ user.username }} <a href="/accounts/logout"> (wyloguj się)</a></p>
+                {% endif %}
+
+        </header>
 
         <nav id="container">
 

@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from django.urls import include, path
 from .views import *
 
 urlpatterns = [
@@ -8,4 +7,6 @@ urlpatterns = [
     url(r'^blog/(?P<username>\w+)/$', blogPage, name = 'blogPage'),
     url(r'^article/(?P<id>\d+)/$', articlePage, name = 'articlePage'),
     url(r'^register/$', userRegister.as_view(), name = 'registerForm'),
+    url(r'^article/new/$', newArticle, name = 'newArticle'),
+    url(r'^article/(?P<id>\d+)/edit/$', editArticle, name = 'editArticle'),
 ]
