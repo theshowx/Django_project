@@ -10,8 +10,14 @@
 
     <body>
 
-        <h2>{{ post.nazwa }}</h2>
-        <h4>{{ post.dataUtworzenia }}</h4>
+        <div class="articleHead">
+
+            <h2>{{ post.nazwa }}</h2>
+            <h3>Autor: {{ post.autor.username }}</h3>
+            <h4>{{ post.dataUtworzenia }}</h4>
+
+        </div>
+
         <p>{{ post.tresc|linebreaksbr }}</p>
 
 
@@ -52,7 +58,7 @@
 
             <li><a href="{% url 'homePage' %}">Strona główna</a></li>
             <li><a href="{% url 'blogPage' post.autor.username %}">Blog autora</a> </li>
-            <li><a href="{% url 'userProfile' post.autor.username %}">Przejdz do profilu autora</a></li>
+            <li><a href="{% url 'userProfile' post.autor.username %}">Przejdź do profilu autora</a></li>
 
         </ul>
 
