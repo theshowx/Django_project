@@ -20,7 +20,7 @@
         {% if comments %}
             {% for comment in comments %}
 
-                <p class="comment">{{ comment.tresc|linebreaksbr }}</p>
+                <p style="font-size: 0.85em; font-style: italic;">{{ comment.tresc|linebreaksbr }}</p>
                 <p style="font-size: 0.75em">
                     Zamieszczony przez:
                     <a href="{% url 'userProfile' comment.autor.username %}">{{ comment.autor.username }}</a>
