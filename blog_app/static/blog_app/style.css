@@ -133,6 +133,10 @@
             background-color: #12db75;
         }
 
+        #answer {
+            margin-left: 40px;
+        }
+
         .articleHead {
             border-radius: 5px;
             border: 1px solid black;

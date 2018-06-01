@@ -42,8 +42,9 @@ def articlePage(request, id):
         raise Http404
 
     comments = Komentarz.objects.filter(artykul = post).order_by('dataZamieszczenia')
+    answers = Komentarz_odpowiedz.objects.filter(artykul = post).order_by('dataZamieszczenia')
 
-    return render(request, 'blog_app/article.html', {'post': post, 'comments': comments}) #, 'user': post.user
+    return render(request, 'blog_app/article.html', {'post': post, 'comments': comments, 'answers': answers}) #, 'user': post.user
 
 def userProfile(request, username):
     try:
@@ -171,4 +172,26 @@ def deleteComment(request, idArt, idKom):
 
     comment.delete()
     return redirect('articlePage' , id = idArt)
+
+def addAnswer(request, idArt, idKom):
+    post = get_object_or_404(Artykul, pk = idArt)
+    comment = get_object_or_404(Komentarz, pk = idKom)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit = False)
+            answer.autor = request.user
+            answer.dataZamieszczenia = timezone.now()
+            answer.save()
+
+            comment_answer = Komentarz_odpowiedz.create(comment, answer, post)
+            comment_answer.dataZamieszczenia = timezone.now()
+            comment_answer.save()
+
+            return redirect('articlePage' , id = post.id)
+
+    else:
+        form = CommentForm
+        return render(request, 'blog_app/editArtCom.html', {'form': form, 'header': "Dodaj nowy komentarz."})
 

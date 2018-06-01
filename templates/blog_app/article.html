@@ -33,6 +33,7 @@
                         <a href="{% url 'userProfile' comment.autor.username %}">{{ comment.autor.username }}</a>
                         {{ comment.dataZamieszczenia }}
                         {% if user.is_authenticated %}
+                            <a href="{% url 'addAnswer' post.id comment.id %}">Odpowiedz</a>
                             {% if user == comment.autor %}
                                 <a href="{% url 'editComment' post.id comment.id %}">Edytuj</a>
                                 <a href="{% url 'deleteComment' post.id comment.id %}">Usuń</a>
@@ -41,6 +42,32 @@
 
                     </p>
                 </div>
+
+                {% if answers %}
+                    {% for answer in answers %}
+                        {% if answer.komentarz == comment %}
+
+                            <div class="comment" id="answer">
+                                <p style="font-size: 0.85em; font-style: italic;">{{ answer.odpowiedz.tresc|linebreaksbr }}</p>
+
+                                <p style="font-size: 0.75em">
+                                    Zamieszczony przez:
+                                    <a href="{% url 'userProfile' answer.odpowiedz.autor.username %}">{{ answer.odpowiedz.autor.username }}</a>
+                                    {{ answer.odpowiedz.dataZamieszczenia }}
+                                    {% if user.is_authenticated %}
+                                        {% if user == answer.odpowiedz.autor %}
+                                            <a href="{% url 'editComment' post.id answer.odpowiedz.id %}">Edytuj</a>
+                                            <a href="{% url 'deleteComment' post.id answer.odpowiedz.id %}">Usuń</a>
+                                        {% endif %}
+                                    {% endif %}
+
+                                </p>
+                            </div>
+
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
             {% endfor %}
         {% else %}
             <p class="comment">Brak komentarzy do wyświetlenia.</p>

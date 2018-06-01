@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^article/(?P<id>\d+)/delete/$', deleteArticle, name = 'deleteArticle'),
     url(r'^article/(?P<id>\d+)/comment/new/$', newComment, name = 'newComment'),
     url(r'^article/(?P<idArt>\d+)/comment/(?P<idKom>\d+)/edit/$', editComment, name = 'editComment'),
-    url(r'^article/(?P<idArt>\d+)/comment/(?P<idKom>\d+)/delete/$', deleteComment, name ='deleteComment'),
+    url(r'^article/(?P<idArt>\d+)/comment/(?P<idKom>\d+)/delete/$', deleteComment, name = 'deleteComment'),
+    url(r'^article/(?P<idArt>\d+)/comment/(?P<idKom>\d+)/answer/$', addAnswer, name = 'addAnswer'),
 ]
