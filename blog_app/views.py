@@ -170,6 +170,12 @@ def deleteComment(request, idArt, idKom):
     if comment.autor != request.user:
         return HttpResponse("Błąd! Nie możesz usuwać komentarzy innych użytkowników.")
 
+    answers = Komentarz_odpowiedz.objects.filter(komentarz = comment).order_by('dataZamieszczenia')
+
+    if answers:
+        for answer in answers:
+            answer.odpowiedz.delete()
+
     comment.delete()
     return redirect('articlePage' , id = idArt)
 
@@ -182,7 +188,9 @@ def addAnswer(request, idArt, idKom):
         if form.is_valid():
             answer = form.save(commit = False)
             answer.autor = request.user
+            answer.artykul = post
             answer.dataZamieszczenia = timezone.now()
+            answer.czyOdpowiedz = True
             answer.save()
 
             comment_answer = Komentarz_odpowiedz.create(comment, answer, post)

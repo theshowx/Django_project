@@ -25,6 +25,7 @@
         <h3>Komentarze:</h3>
         {% if comments %}
             {% for comment in comments %}
+                {% if comment.czyOdpowiedz == False %}
                 <div class="comment">
                     <p style="font-size: 0.85em; font-style: italic;">{{ comment.tresc|linebreaksbr }}</p>
 
@@ -67,7 +68,7 @@
                         {% endif %}
                     {% endfor %}
                 {% endif %}
-
+                {% endif %}
             {% endfor %}
         {% else %}
             <p class="comment">Brak komentarzy do wyświetlenia.</p>

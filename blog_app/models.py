@@ -22,13 +22,14 @@ class Komentarz(models.Model):
     autor = models.ForeignKey(User, on_delete = models.CASCADE)
     dataZamieszczenia = models.DateTimeField("Data zamieszczenia")
     artykul = models.ForeignKey(Artykul, on_delete = models.CASCADE, null = True, blank = True)
+    czyOdpowiedz = models.BooleanField(default=False)
 
     def __str__(self):
         return "Komentarz " + self.autor.username + " w " + self.artykul.__str__()
 
 class Komentarz_odpowiedz(models.Model):
     komentarz = models.ForeignKey(Komentarz, on_delete = models.CASCADE)
-    odpowiedz = models.ForeignKey(Komentarz, on_delete = models.CASCADE, related_name='Odpowiedz')
+    odpowiedz = models.OneToOneField(Komentarz, on_delete = models.CASCADE, related_name='Odpowiedz')
     artykul = models.ForeignKey(Artykul, on_delete = models.CASCADE, null = True, blank = True)
     dataZamieszczenia = models.DateTimeField("Data zamieszczenia", null = True, blank = True)
 
