@@ -1,0 +1,57 @@
+{% extends 'blog_app/base.html' %}
+
+{% block top %}
+
+    <div style="float: right; padding-right: 15px;">
+
+        {% if error2 %}
+            <p style="color: red; font-size: 0.75em;">Wpisz szukaną frazę.</p>
+        {% endif %}
+        <label style="font-size:0.8em">Szukaj artykułów</label>
+
+        <form action="{% url 'articleSearch' %}" method="get">
+
+            <input type="text" name="q">
+            <input type="submit" value="Szukaj">
+
+        </form>
+
+    </div>
+
+{% endblock %}
+
+{% block content %}
+    <head>
+        <title>Wyniki wyszukiwania</title>
+    </head>
+
+    <body>
+        <p>Wyszukiwana fraza: <strong>{{ query }}</strong></p>
+
+        {% if results %}
+            <p>Znaleziono:</p>
+            <ul style="list-style-type: square;">
+                {% for result in results %}
+                    <li>
+                        <h3><a href="{% url 'articlePage' result.id %}">{{ result.nazwa }}</a></h3>
+                        <p>Autor:<a href="{% url 'userProfile' result.autor.username %}"> {{ result.autor.username }}</a> {{ result.dataUtworzenia }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nie znaleziono artykułów pasujących do wyszukiwanej frazy.</p>
+        {% endif %}
+    </body>
+{% endblock %}
+
+{% block left %}
+
+    <nav>
+
+        <ul>
+            <li><a href="{% url 'homePage' %}">Strona główna</a></li>
+        </ul>
+
+    </nav>
+
+{% endblock %}

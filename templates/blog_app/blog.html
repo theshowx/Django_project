@@ -1,5 +1,25 @@
 {% extends 'blog_app/base.html' %}
 
+{% block top %}
+
+    <div style="float: right; padding-right: 15px;">
+
+        {% if error3 %}
+            <p style="color: red; font-size: 0.75em;">Wpisz szukaną frazę.</p>
+        {% endif %}
+        <label style="font-size:0.8em">Przeszukaj blog</label>
+
+        <form action="{% url 'blogSearch' userr.username %}" method="get">
+
+            <input type="text" name="q">
+            <input type="submit" value="Szukaj">
+
+        </form>
+
+    </div>
+
+{% endblock %}
+
 {% block content %}
 
     <head>

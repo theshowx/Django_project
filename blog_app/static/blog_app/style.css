@@ -1,20 +1,21 @@
-		body {
-			min-width: 630px;
-		}
-
 		#container {
 			padding-left: 200px;
 			padding-right: 190px;
+			overflow: hidden;
 		}
 
 		#container .column {
 			position: relative;
 			float: left;
+			padding-bottom: 1001em;
+			margin-bottom: -1000em;
+			padding-top: 1em;
 		}
 
 		#center {
 			padding: 10px 20px;
 			width: 100%;
+			background: #50E3C5;
 		}
 
 		#left {
@@ -22,12 +23,16 @@
 			padding: 0 10px;
 			right: 240px;
 			margin-left: -100%;
+			background: #328CDC;
+			border-right: 1px solid black;
 		}
 
 		#right {
 			width: 130px;
 			padding: 0 10px;
 			margin-right: -100%;
+			background: #5ABEE6;
+			border-left: 1px solid black;
 		}
 
 		#footer {
@@ -37,16 +42,6 @@
 		/* IE hack */
 		* html #left {
 			left: 150px;
-		}
-
-		/* Make the columns the same height as each other */
-		#container {
-			overflow: hidden;
-		}
-
-		#container .column {
-			padding-bottom: 1001em;
-			margin-bottom: -1000em;
 		}
 
 		/* Fix for the footer */
@@ -65,6 +60,7 @@
 
 		/* Aesthetics */
 		body {
+			min-width: 630px;
 			margin: 0;
 			padding: 0;
 			font-family:Sans-serif;
@@ -92,23 +88,10 @@
 			background: #000000;
 		}
 
-		#left {
-			background: #328CDC;
-			border: 2px solid black;
-		}
-
-		#right {
-			background: #5ABEE6;
-			border: 2px solid black;
-		}
-
-		#center {
-			background: #50E3C5;
-		}
-
-		#container .column {
-			padding-top: 1em;
-		}
+		#header div {
+            display: inline-block;
+            color: #555;
+        }
 
         .form {
             height: 280px;

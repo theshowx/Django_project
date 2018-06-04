@@ -12,13 +12,44 @@
 
 
     <body>
+
         <header id="header">
 
-
+            <div>
                 <p>Blogonatron</p>
-                {% if user.is_authenticated %}
-                    <p id="logged">Witaj, {{ user.username }} <a href="/accounts/logout"> (wyloguj się)</a></p>
+            </div>
+
+            {% block top %}
+            {% endblock %}
+
+            <div style="float: right; padding-right: 15px;">
+
+                {% if error1 %}
+                    <p style="color: red; font-size: 0.75em;">Wpisz szukaną frazę.</p>
                 {% endif %}
+                <label style="font-size:0.8em">Szukaj użytkowników</label>
+
+                <form action="{% url 'userSearch' %}" method="get">
+
+                    <input type="text" name="q">
+                    <input type="submit" value="Szukaj">
+
+                </form>
+
+            </div>
+
+            <p>
+                {% if user.is_authenticated %}
+
+                    Witaj, {{ user.username }} <a href="/accounts/logout"> (wyloguj się)</a>
+
+                {% else %}
+
+                    Witaj!
+
+                {% endif %}
+
+            </p>
 
         </header>
 
@@ -53,6 +84,7 @@
 		    <footer id="footer"><p>Show™ 2018</p></footer>
 
         </div>
+
     </body>
 
 </html>

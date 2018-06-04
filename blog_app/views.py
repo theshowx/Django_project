@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import *
 from django.views.generic import View
+from django.db.models import Q
 
 def homePage(request):
     try:
@@ -72,24 +73,6 @@ class userRegister(View):
 
         else:
             return render(request, 'blog_app/register.html', {'form': form, 'message': "Błąd! Użytkownik o podanej nazwie już istnieje."})
-
-# class userLogin(View):
-#     def get(self, request):
-#         form = LoginForm(None)
-#         return render(request, 'blog_app/login.html', {'form': form})
-#
-#     def post(self, request):
-#         form = LoginForm(request.POST)
-#         username = form.cleaned_data['username']
-#         password = form.cleaned_data['password']
-#
-#         user = authenticate(request, username=username, password=password)
-#
-#         if user is not None:
-#             login(request, user)
-#             return render(request, 'blog_app/profile.html', {'user': user, 'message': "Rejestracja pomyślna."})
-#         else:
-#             return self.get()
 
 def newArticle(request):
     if request.method == "POST":
@@ -203,3 +186,40 @@ def addAnswer(request, idArt, idKom):
         form = CommentForm
         return render(request, 'blog_app/editArtCom.html', {'form': form, 'header': "Dodaj nowy komentarz."})
 
+def userSearch(request):
+
+    error = False
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if not q:
+            error = True
+        else:
+            results = User.objects.filter(Q(username__icontains=q) | Q(first_name__icontains=q) | Q(last_name__icontains=q))
+            return render(request, 'blog_app/userSearch.html', {'results': results, 'query': q})
+    return render(request, 'blog_app/userSearch.html', {'error1': error})
+
+def articleSearch(request):
+
+    error = False
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if not q:
+            error = True
+        else:
+            results = Artykul.objects.filter(Q(tresc__icontains=q) | Q(nazwa__icontains=q) | Q(dataUtworzenia__icontains=q))
+            return render(request, 'blog_app/articleSearch.html', {'results': results, 'query': q})
+    return render(request, 'blog_app/articleSearch.html', {'error2': error})
+
+def blogSearch(request, username):
+
+    user = get_object_or_404(User, username = username)
+
+    error = False
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if not q:
+            error = True
+        else:
+            results = Artykul.objects.filter(Q(tresc__icontains=q) | Q(nazwa__icontains=q) | Q(dataUtworzenia__icontains=q), autor = user)
+            return render(request, 'blog_app/blogSearch.html', {'results': results, 'query': q, 'username': username})
+    return render(request, 'blog_app/blogSearch.html', {'error3': error, 'username': username})
