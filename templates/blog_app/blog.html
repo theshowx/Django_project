@@ -32,12 +32,16 @@
     </head>
 
     {% if posts %}
-        {% for post in posts %}
-            <h3><a href="{% url 'articlePage' post.id %}">{{ post.nazwa }}</a></h3>
-            <p>{{ post.dataUtworzenia }}</p>
-        {% endfor %}
-    {% else %}
-        <p>Brak postów do wyświetlenia</p>
+        <nav>
+            <ul>
+                {% for post in posts %}
+                    <h3><a href="{% url 'articlePage' post.id %}">{{ post.nazwa }}</a></h3>
+                    <p>{{ post.dataUtworzenia }}</p>
+                {% endfor %}
+            {% else %}
+                    <p>Brak postów do wyświetlenia</p>
+            </ul>
+        </nav>
     {% endif %}
 
 {% endblock %}
