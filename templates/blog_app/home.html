@@ -40,7 +40,7 @@
                 <nav>
                     <ul>
                         {% for post in posts %}
-                        
+
                             <li>
                                 <h3><a href="{% url 'articlePage' post.id %}">{{ post.nazwa }}</a></h3>
                                 <p>Autor:<a href="{% url 'userProfile' post.autor.username %}"> {{ post.autor.username }}</a> {{ post.dataUtworzenia }}</p>
