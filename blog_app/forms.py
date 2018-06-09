@@ -13,7 +13,7 @@ class ArticleForm(forms.ModelForm):
 
     class Meta:
         model = Artykul
-        fields = ['nazwa', 'tresc']
+        fields = ['nazwa', 'obraz', 'tresc']
 
 class CommentForm(forms.ModelForm):
 

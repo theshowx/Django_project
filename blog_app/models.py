@@ -1,21 +1,30 @@
 from django.contrib.auth.models import *
+from django.conf import settings
+import os
 
-# class Uzytkownik(models.Model):
-#     imie = models.CharField(max_length = 50)
-#     nazwisko = models.CharField(max_length = 50)
-#     email = models.EmailField(null = True, blank = True)
-#     login = models.CharField(max_length = 50)
-#     haslo = models.CharField(max_length = 50)
+class ImageField(models.ImageField):
+
+    def save_form_data(self, instance, data):
+        if data is not None:
+            file = getattr(instance, self.attname)
+            if file != data:
+                file.delete(save=False)
+        super(ImageField, self).save_form_data(instance, data)
 
 class Artykul(models.Model):
     nazwa = models.CharField(max_length = 50)
     autor = models.ForeignKey(User, on_delete = models.CASCADE)
+    obraz = models.ImageField(upload_to='blog_app/', null = True, blank = True)
     tresc = models.TextField(null = True, blank = True)
-    #komentarz = models.ForeignKey(Komentarz, on_delete = models.CASCADE, null = True, blank = True)
     dataUtworzenia = models.DateTimeField('Data utworzenia')
 
     def __str__(self):
         return self.nazwa + " by " + self.autor.username
+
+    def delete(self, *args, **kwargs):
+        if self.obraz:
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.obraz.name))
+        super(Artykul,self).delete(*args,**kwargs)
 
 class Komentarz(models.Model):
     tresc = models.TextField(null = True, blank = True)
@@ -37,3 +46,5 @@ class Komentarz_odpowiedz(models.Model):
     def create(cls, komentarz, odpowiedz, artykul):
         komentarz_odpowiedz = cls(komentarz=komentarz, odpowiedz=odpowiedz, artykul=artykul)
         return komentarz_odpowiedz
+
+

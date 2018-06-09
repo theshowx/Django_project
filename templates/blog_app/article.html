@@ -18,9 +18,11 @@
 
         </div>
 
+        {% if post.obraz %}
+            <center><img src="{{ post.obraz.url }}" style="text-align: middle"/></center>
+        {% endif %}
+
         <p>{{ post.tresc|linebreaksbr }}</p>
-
-
 
         <h3>Komentarze:</h3>
         {% if comments %}

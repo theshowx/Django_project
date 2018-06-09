@@ -76,7 +76,7 @@ class userRegister(View):
 
 def newArticle(request):
     if request.method == "POST":
-        form = ArticleForm(request.POST)
+        form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit = False)
             post.autor = request.user
@@ -89,15 +89,17 @@ def newArticle(request):
 
 def editArticle(request, id):
     post = get_object_or_404(Artykul, pk = id)
+    img = post.obraz
     if post.autor != request.user:
         return HttpResponse("Błąd! Nie możesz edytować artykułów innych użytkowników.")
 
     if request.method == "POST":
-        form = ArticleForm(request.POST, instance = post)
+        form = ArticleForm(request.POST, request.FILES, instance = post)
         if form.is_valid():
             post = form.save(commit = False)
+            if img is not None and img != request.FILES:
+                os.remove(os.path.join(settings.MEDIA_ROOT, img.name))
             post.autor = request.user
-            #post.dataUtworzenia = timezone.now()
             post.save()
             return redirect('articlePage' , id = post.id)
     else:
