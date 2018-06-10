@@ -97,7 +97,7 @@ def editArticle(request, id):
         form = ArticleForm(request.POST, request.FILES, instance = post)
         if form.is_valid():
             post = form.save(commit = False)
-            if img is not None and img != request.FILES:
+            if img and img != post.obraz:
                 os.remove(os.path.join(settings.MEDIA_ROOT, img.name))
             post.autor = request.user
             post.save()
