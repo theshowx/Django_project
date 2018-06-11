@@ -33,7 +33,7 @@
             <ul style="list-style-type: square;">
                 {% for result in results %}
                     <li>
-                        <h3><a href="{% url 'articlePage' result.id %}">{{ result.nazwa }}</a></h3>
+                        <h3><a href="{% url 'viewArticle' result.id %}">{{ result.nazwa }}</a></h3>
                         <p>Autor:<a href="{% url 'userProfile' result.autor.username %}"> {{ result.autor.username }}</a> {{ result.dataUtworzenia }}</p>
                     </li>
                 {% endfor %}

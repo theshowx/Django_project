@@ -6,10 +6,19 @@
     <div class="form">
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% if form.errors %}
+                <p>{{ form.errors }}</p>
+            {% endif %}
+            {% for field in form %}
+
+            <label>{{ field.label_tag }}</label>
+            <div>{{ field }}</div>
+
+        {% endfor %}
             <button type="submit">Zaloguj</button>
         </form>
     </div>
+
 {% endblock %}
 
 {% block right %}

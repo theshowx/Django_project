@@ -39,7 +39,7 @@
 
                 {% for post in posts %}
 
-                    <h3><a href="{% url 'articlePage' post.id %}">{{ post.nazwa }}</a></h3>
+                    <h3><a href="{% url 'viewArticle' post.id %}">{{ post.nazwa }}</a></h3>
                     <p>{{ post.dataUtworzenia }}</p>
 
                 {% endfor %}
@@ -81,6 +81,7 @@
                 {% if user == userr %}
 
                     <li><a href="{% url 'newArticle' %}">Dodaj artykuł</a></li>
+                    <li><a href="{% url 'newPrivateArticle' %}">Dodaj prywatny artykuł</a></li>
 
                 {% endif %}
             {% endif %}

@@ -1,21 +1,24 @@
 from django.contrib.auth.models import *
 from django.conf import settings
+from django.utils.encoding import smart_str
+from hashlib import sha1 as sha_constructor
 import os
 
-class ImageField(models.ImageField):
+def get_hexdigest(salt, raw_password):
+        raw_password, salt = smart_str(raw_password), smart_str(salt)
+        return sha_constructor(salt.encode('utf-8') + raw_password.encode('utf-8')).hexdigest()
 
-    def save_form_data(self, instance, data):
-        if data is not None:
-            file = getattr(instance, self.attname)
-            if file != data:
-                file.delete(save=False)
-        super(ImageField, self).save_form_data(instance, data)
+def check_password(raw_password, enc_password):
+        salt, hsh = enc_password.split('$')
+        return hsh == get_hexdigest(salt, raw_password)
 
 class Artykul(models.Model):
     nazwa = models.CharField(max_length = 50)
     autor = models.ForeignKey(User, on_delete = models.CASCADE)
     obraz = models.ImageField(upload_to='blog_app/', null = True, blank = True)
     tresc = models.TextField(null = True, blank = True)
+    czyPrywatny = models.BooleanField(blank = True)
+    hasło = models.CharField(max_length = 100, null = True, blank = True)
     dataUtworzenia = models.DateTimeField('Data utworzenia')
 
     def __str__(self):
@@ -25,6 +28,12 @@ class Artykul(models.Model):
         if self.obraz:
             os.remove(os.path.join(settings.MEDIA_ROOT, self.obraz.name))
         super(Artykul,self).delete(*args,**kwargs)
+
+    def set_password(self, password):
+        import random
+        salt = get_hexdigest(str(random.random()), str(random.random()))[:5]
+        hsh = get_hexdigest(salt, password)
+        self.hasło = '%s$%s' % (salt, hsh)
 
 class Komentarz(models.Model):
     tresc = models.TextField(null = True, blank = True)
